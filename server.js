@@ -154,14 +154,6 @@ app.post('/login', (req, res) => {
         res.cookie("userEmail", email, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
         res.status(200).json({ message: "Успішний логін" });
     });
-
-    // Перевірка пароля
-    // if (client.password !== password) {
-    //     return res.status(401).json({ error: "Невірний пароль" });
-    // }
-
-    // Логіка для логування користувача (можна додати cookie або токен для сесії)
-    //res.status(200).json({ message: "Успішний логін" });
 });
 
 app.get('/check-auth', (req, res) => {

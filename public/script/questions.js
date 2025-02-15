@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     h3.style.display = "none"
     document.body.appendChild(h3)
 
+
     fetch("questions.json")
         .then(response => response.json())
         .then(data => {
@@ -279,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getLastResult() {
         const results = JSON.parse(localStorage.getItem("results")) || [];
-        return results.length > 1 ? results[results.length - 2] : null; // Передостанній запис (бо останній – новий)
+        return results.length > 1 ? results[results.length - 1] : null; // Передостанній запис (бо останній – новий)
     }
 
     function saveLocal() {

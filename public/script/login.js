@@ -29,7 +29,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
         const result = await response.json();
 
         if (response.ok) {
-            window.location.href = '/'; // Перехід на головну сторінку після успішного логіну
+            window.location.href = '/';
         } else {
             loginError.textContent = result.error || 'Помилка входу. Спробуйте ще раз.';
         }
