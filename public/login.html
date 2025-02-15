@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Логін</title>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Логін</h2>
+    <form id="login-form">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <div id="email-error" class="error-message"></div>
+
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" required>
+        <div id="password-error" class="error-message"></div>
+
+        <button type="submit" class="submit-btn">Увійти</button>
+    </form>
+    <div id="login-error" class="error-message"></div>
+</div>
+
+<script src="script/login.js"></script>
+
+</body>
+</html>

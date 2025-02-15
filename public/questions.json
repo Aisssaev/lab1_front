@@ -1,0 +1,32 @@
+[
+  {
+    "question": "Яка фігура на рис?",
+    "options": ["Квадрат", "Коло", "Прямокутник", "Трикутник"],
+    "correct": 2,
+    "svg": "form1.svg"
+  },
+  {
+    "question": "Якого кольору фігура?",
+    "options": ["red", "green", "blue", "lavander"],
+    "correct": 0,
+    "svg": "color.svg"
+  },
+  {
+    "question": "Скільки кутів у фігури?",
+    "options": ["2", "3", "4", "5"],
+    "correct": 1,
+    "svg": "shape.svg"
+  },
+  {
+    "question": "Хто зображений на картинці?",
+    "options": ["Вовк", "Лисиця", "Заєць", "Кіт"],
+    "correct": 1,
+    "svg": "animal.svg"
+  },
+  {
+    "question": "Яка фігура на рис?",
+    "options": ["Квадрат", "Круг", "Зірка", "Прямокутник"],
+    "correct": 1,
+    "svg": "form2.svg"
+  }
+]

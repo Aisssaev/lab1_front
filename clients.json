@@ -1,0 +1,26 @@
+[
+  {
+    "fname": "Мирослав",
+    "lname": "Зізинь",
+    "email": "MYROSLAV-PAVLO.ZIZYN@lnu.edu.ua",
+    "password": "$2b$10$ZzelplJZFyuzJYgpj.3h/OTp7tI744AY8609787MsW06Cl294zJJi",
+    "phone": "+380509517319",
+    "bdate": "2025-02-15",
+    "sex": "Жінка",
+    "country": "UA",
+    "consent": true,
+    "profilePicture": null
+  },
+  {
+    "fname": "Мирослав",
+    "lname": "Зізинь",
+    "email": "MYROSLAV-PAVLO.ZIZYN123@lnu.edu.ua",
+    "password": "$2b$10$srxYKSeDZxtsuncIhekaWO8prwAP5PsmtaeTVADn5AluPFDVdW1lG",
+    "phone": "+380509517319",
+    "bdate": "2025-02-16",
+    "sex": "Жінка",
+    "country": "UA",
+    "consent": true,
+    "profilePicture": null
+  }
+]

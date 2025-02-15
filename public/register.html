@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Registration</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            form {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                /*width: 300px;*/
+            }
+
+            label {
+                font-weight: bold;
+                margin-top: 10px;
+                /*display: block;*/
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="tel"],
+            input[type="date"],
+            select {
+                width: 95%;
+                padding: 8px;
+                margin-top: 5px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            input[type="radio"] {
+                margin-right: 5px;
+            }
+
+            input[type="checkbox"] {
+                margin-right: 5px;
+            }
+
+            input[type="button"] {
+                width: 100%;
+                padding: 10px;
+                background-color: #28a745;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            input[type="button"]:hover {
+                background-color: #218838;
+            }
+
+            .radio-group, .checkbox-group {
+                margin-bottom: 10px;
+            }
+
+            .radio-group label, .checkbox-group label {
+                font-weight: normal;
+            }
+
+            .file-input {
+                margin-top: 10px;
+            }
+
+            .result {
+                margin-top: 20px;
+                font-size: 14px;
+                color: #555;
+            }
+
+            .container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .header {
+                text-align: center;
+                font-size: 30px;
+            }
+
+            .error {
+                color: red;
+                font-size: 12px;
+                margin-top: 5px;
+            }
+        </style>
+        <script>
+            async function checkEmailExists(email) {
+                try {
+                    const response = await fetch(`/check-email?email=${encodeURIComponent(email)}`);
+                    console.log(response)
+                    const data = await response.json();
+                    console.log(data.exists)
+                    return data.exists;
+                } catch (error) {
+                    console.error("Помилка перевірки email:", error);
+                    return false;
+                }
+            }
+            async function validateForm() {
+                let isValid = true;
+
+                const errorElements = document.querySelectorAll('.error');
+                errorElements.forEach(el => el.remove());
+
+                const fname = document.getElementById('fname').value.trim();
+                console.log(!fname)
+                if (!fname) {
+                    showError('fname', "Будь ласка, введіть ім'я");
+                    isValid = false;
+                }
+
+                const lname = document.getElementById('lname').value.trim();
+                if (!lname) {
+                    showError('lname', "Будь ласка, введіть прізвище");
+                    isValid = false;
+                }
+
+                const email = document.getElementById('email').value.trim();
+                if (!email) {
+                    showError('email', "Будь ласка, введіть email");
+                    isValid = false;
+                } else if (!validateEmail(email)) {
+                    showError('email', "Будь ласка, введіть коректний email");
+                    isValid = false;
+                }else {
+                    const emailExists = await checkEmailExists(email)
+                    if (emailExists) {
+                        showError('email', "Користувач з такою поштою вже існує");
+                        isValid = false;
+                    }
+                }
+
+                const password = document.getElementById('password').value.trim();
+                if (!password) {
+                    showError('password', "Будь ласка, введіть пароль");
+                    isValid = false;
+                }
+
+                const phone = document.getElementById('phone').value.trim();
+                if (!phone) {
+                    showError('phone', "Будь ласка, введіть номер телефону");
+                    isValid = false;
+                } else if (!/^\+?\d{10,15}$/.test(phone)) {
+                    showError('phone', "Некоректний формат номера телефону");
+                    isValid = false;
+                }
+
+                const bdate = document.getElementById('bdate').value.trim();
+                if (!bdate) {
+                    showError('bdate', "Будь ласка, введіть дату народження");
+                    isValid = false;
+                }
+
+                const sex = document.querySelector('input[name="sex"]:checked');
+                if (!sex) {
+                    showError('sex', "Будь ласка, оберіть стать");
+                    isValid = false;
+                }
+
+                const country = document.getElementById('country').value;
+                if (!country) {
+                    showError('country', "Будь ласка, оберіть країну");
+                    isValid = false;
+                }
+
+                const consent = document.getElementById('consent').checked;
+                if (!consent) {
+                    showError('consent', "Ви повинні дати згоду на обробку даних");
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            function showError(fieldId, message) {
+                const field = document.getElementById(fieldId);
+                const error = document.createElement('div');
+                error.className = 'error';
+                error.textContent = message;
+                field.parentNode.insertBefore(error, field.nextSibling);
+            }
+
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            async function register() {
+                if (!await validateForm()) {
+                    return;
+                }
+                const formData = {
+                    fname: document.getElementById('fname').value,
+                    lname: document.getElementById('lname').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    phone: document.getElementById('phone').value,
+                    bdate: document.getElementById('bdate').value,
+                    sex: document.querySelector('input[name="sex"]:checked').value,
+                    country: document.getElementById('country').value,
+                    consent: document.getElementById('consent').checked,
+                    profilePicture: document.getElementById('profile-picture').files[0] ? document.getElementById('profile-picture').files[0].name : null
+                };
+
+                fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        alert(data);
+                    })
+                    .catch((error) => {
+                        console.error('Помилка:', error);
+                    });
+            }
+        </script>
+</head>
+<body>
+<div class="container">
+    <h1 class="header">Реєстрація</h1>
+    <form method="post">
+        <label for="fname">Ім'я</label><br>
+        <input type="text" id="fname" maxlength="50" required><br>
+        <label for="lname">Прізвище</label><br>
+        <input type="text" id="lname" maxlength="50" required><br>
+        <label for="email">Email</label><br>
+        <input type="email" id="email" maxlength="50" required><br>
+        <label for="password">Пароль</label><br>
+        <input type="password" id="password" maxlength="50" required></p>
+        <label for="phone">Номер телефону</label><br>
+        <input type="tel" id="phone" name="phone" placeholder="+380123456789" pattern="^\+?\d{10,15}$" required></p>
+        <label for="bdate">Дата народження</label><br>
+        <input type="date" id="bdate" required></p>
+        <div class="radio-group">
+            <label>Стать</label><br>
+            <input type="radio" id="male" name="sex" value="Чоловік">
+            <label for="male">Чоловік</label><br>
+            <input type="radio" id="female" name="sex" value="Жінка" checked>
+            <label for="female">Жінка</label></p>
+        </div>
+        <label for="country">Країна</label><br>
+        <select id="country" name="country" required>
+            <option value="UA">Україна</option>
+            <option value="PL">Польща</option>
+            <option value="DE">Німеччина</option>
+            <option value="FR">Франція</option>
+            <option value="IT">Італія</option>
+            <option value="ES">Іспанія</option>
+            <option value="GB">Велика Британія</option>
+            <option value="US">США</option>
+            <option value="CA">Канада</option>
+        </select>
+        <div class="checkbox-group">
+            <input type="checkbox" name="consent" id="consent" required>
+            <label for="consent">Я даю згоду на обробку моїх персональних даних</label></p>
+        </div>
+        <label for="profile-picture">Завантажити фото профілю:</label><br>
+        <input type="file" id="profile-picture" name="profile-picture" accept="image/*" class="file-input"></p>
+        <input type="button" name="sign_in" id="sign_in" value="Зареєструватись" onclick="register()">
+        <div class="result">
+            <p>Лабораторна 2 (тест): <span id="result_test">Очікується...</span></p>
+            <p>Лабораторна 3 (гра): <span id="result_game">Очікується...</span></p>
+        </div>
+    </form>
+</div>
+</body>
+</html>

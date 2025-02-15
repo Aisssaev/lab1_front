@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .container {
+            width: 80%;
+            margin-top: 20px;
+        }
+        .client-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            background-color: #fff;
+        }
+        .client-row button {
+            background-color: #35dc56;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+
+        }
+        .client-row button:hover {
+            background-color: #23c839;
+        }
+        .client-row button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .client-row input[type="text"] {
+            padding: 5px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Admin Panel</h2>
+    <div id="clients-list"></div>
+</div>
+
+<script>
+    async function getClients() {
+        try {
+            const response = await fetch('/admin');
+            const clients = await response.json();
+            displayClients(clients);
+        } catch (error) {
+            console.error("Помилка пошуку клієнтів:", error);
+        }
+    }
+
+    function displayClients(clients) {
+        const clientsList = document.getElementById('clients-list');
+        clientsList.innerHTML = '';
+        clients.forEach(client => {
+            const clientRow = document.createElement('div');
+            clientRow.classList.add('client-row');
+
+            const clientNameInput = document.createElement('input');
+            clientNameInput.type = 'text';
+            clientNameInput.value = client.fname;
+            clientRow.appendChild(clientNameInput);
+
+            const clientLastNameInput = document.createElement('input');
+            clientLastNameInput.type = 'text';
+            clientLastNameInput.value = client.lname;
+            clientRow.appendChild(clientLastNameInput);
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Редагувати';
+            editButton.disabled = true;
+            editButton.onclick = () => editClient(client, clientNameInput.value, clientLastNameInput.value);
+            clientRow.appendChild(editButton);
+
+            [clientNameInput, clientLastNameInput].forEach(input => {
+                input.addEventListener('input', () => {
+                    if (clientNameInput.value !== client.fname || clientLastNameInput.value !== client.lname) {
+                        editButton.disabled = false;
+                    } else {
+                        editButton.disabled = true;
+                    }
+                });
+            });
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Видалити';
+            deleteButton.onclick = () => deleteClient(client.email);
+            clientRow.appendChild(deleteButton);
+
+            clientsList.appendChild(clientRow);
+        });
+    }
+
+    async function editClient(client, newName, newLastName) {
+        client.fname = newName;
+        client.lname = newLastName;
+        try {
+            const response = await fetch('/admin/edit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(client),
+            });
+            if (response.ok) {
+                alert('Інформація оновлена');
+                getClients();
+            }
+        } catch (error) {
+            console.error('Помилка редагування клієнта:', error);
+        }
+    }
+
+    async function deleteClient(email) {
+        try {
+            const response = await fetch(`/admin/delete?email=${email}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                alert('Клієнт видалений');
+                getClients();
+            }
+        } catch (error) {
+            console.error('Помилка видалення клієнта:', error);
+        }
+    }
+
+    window.onload = getClients;
+</script>
+</body>
+</html>

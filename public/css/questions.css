@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    color: #333;
+}
+
+.question-nav {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.question-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.question-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    background-color: lightgray;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.question-btn.active {
+    border: 2px solid black;
+}
+
+.question-btn.answered {
+    background-color: #4b4b4b;
+    color: white;
+}
+
+.question-container {
+    background: white;
+    padding: 10px;
+    margin: auto;
+    width: 50%;
+    border-radius: 10px;
+}
+
+.option-btn {
+    display: block;
+    width: 95%;
+    padding: 10px;
+    margin: 5px auto;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    background: #a9a9a9;
+    color: white;
+    border-radius: 5px;
+}
+
+.finish-btn {
+}
+
+.option-btn:hover {
+    background: #2dd354;
+}
+
+.option-btn.selected {
+    background: #2dd354;
+    color: white;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+}
+
+.navigation button {
+    padding: 10px 20px;
+    margin: 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    background: green;
+    color: white;
+    border-radius: 5px;
+}
+
+.navigation button:hover {
+    background: darkgreen;
+}
+
+.correct {
+    background-color: #4CAF50 !important; /* ✅ Зелений */
+    color: white;
+}
+
+.incorrect {
+    background-color: #f44336 !important; /* ❌ Червоний */
+    color: white;
+}
+
+.option-btn {
+    transition: background-color 0.3s ease;
+}
+
+.incorrect {
+    background-color: #f44336 !important; /* ❌ Червоний */
+    color: white;
+}
+
