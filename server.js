@@ -64,6 +64,7 @@ app.post("/save-result", (req, res) => {
     });
 });
 
+
 function writeClientsFile(data) {
     fs.writeFileSync(clientsFilePath, JSON.stringify(data, null, 2));
 }
@@ -75,6 +76,14 @@ app.get('/adminpanel', (req, res) => {
 app.get('/questions', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'questions.html'));
 });
+
+app.get('/game', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'game.html'))
+})
+
+app.get('/todolist', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'todo_list.html'))
+})
 
 app.get('/admin', (req, res) => {
     const clients = readClientsFile();

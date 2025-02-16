@@ -128,5 +128,22 @@
     "email": "MYROSLAV-PAVLO.ZIZYN123@lnu.edu.ua",
     "date": "15.02.2025",
     "score": 0
+  },
+  {
+    "email": "MYROSLAV-PAVLO.ZIZYN@lnu.edu.ua",
+    "date": "15.02.2025",
+    "score": 2
+  },
+  {
+    "email": "MYROSLAV-PAVLO.ZIZYN@lnu.edu.ua",
+    "date": "15.02.2025",
+    "score": 5,
+    "gameDifficulty": "Легкий"
+  },
+  {
+    "email": "MYROSLAV-PAVLO.ZIZYN@lnu.edu.ua",
+    "date": "15.02.2025",
+    "score": 12,
+    "gameDifficulty": "Легкий"
   }
 ]

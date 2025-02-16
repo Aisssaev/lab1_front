@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getLastResult() {
         const results = JSON.parse(localStorage.getItem("results")) || [];
-        return results.length > 1 ? results[results.length - 1] : null; // Передостанній запис (бо останній – новий)
+        return results.length > 1 ? results[results.length - 1] : null;
     }
 
     function saveLocal() {
